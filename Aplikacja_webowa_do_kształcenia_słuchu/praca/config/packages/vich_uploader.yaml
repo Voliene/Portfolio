@@ -1,0 +1,7 @@
+vich_uploader:
+    db_driver: orm
+    mappings:
+        music_file:
+            uri_prefix: /uploads/music_files
+            upload_destination: '%kernel.project_dir%/public/uploads/music_files'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

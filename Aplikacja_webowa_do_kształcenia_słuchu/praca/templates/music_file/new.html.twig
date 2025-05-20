@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MusicFile{% endblock %}
+
+{% block body %}
+    <h1>Dodaj nowy plik</h1>
+
+{{ form_start(form) }}
+        {{ form_row(form.file) }}
+<button class="mb-3" type="submit">Prześlij</button>
+{{ form_end(form) }}
+
+    {% block image %}
+{# no image #}
+    {% endblock %}
+
+    <a href="http://localhost:50929/dictation"  class="btn btn-primary">Przejdź do dyktanda</a>
+    <a href="{{ path('app_music_file_index') }}" class="btn btn-primary">Wyświetl listę plików</a>
+
+        {% endblock %}

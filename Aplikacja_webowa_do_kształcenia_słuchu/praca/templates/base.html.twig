@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    {# Załaduj plik CSS Bootstrapa 5 #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    header
+    {
+    display: block;
+    text-align: left;
+    margin: 0;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    }
+    body {
+        background: linear-gradient(to bottom, #ffffff, #F5F5DC);
+        background-size: cover;
+        min-height: 100vh;
+        margin-left: 10px;
+    }
+
+    .full-image {
+        max-width: 67%;
+        max-height: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+</style>
+    {# Jeśli masz własne style CSS, możesz je załadować tutaj #}
+
+    {# Umożliwiamy nadpisywanie stylów w innych szablonach #}
+    {% block stylesheets %}{% endblock %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+
+    {% block javascripts %}{% endblock %}
+            {{ importmap() }}
+</head>
+<body>
+{# Możesz dodać nawigację lub inne elementy w strukturze strony zgodnie z Bootstrapem 5 #}
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">MusApp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Przełącz nawigację">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href={{ path('homepage') }}>Strona główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:50929/sing">Śpiew</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:50929/dictation">Dyktando</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+{% block body %}
+
+    <img src="{{ asset('uploads/MusApp.png') }}" alt="Obrazek powitalny" class="full-image">
+
+{% endblock %}
+{# Załaduj plik JS Bootstrapa 5 (wraz z bundle, aby obsługiwał np. hamburger menu) #}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>

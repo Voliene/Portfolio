@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista plików{% endblock %}
+
+{% block body %}
+    <h1>Lista plików</h1>
+
+
+
+    <audio id="global-player" controls style="display:none;"></audio>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nazwa pliku</th>
+                <th>akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for music_file in music_files %}
+            {% if music_file.fileName is not null %}
+            <tr>
+                <td>{{ music_file.id }}</td>
+                <td>{{ music_file.fileName }}</td>
+                <td>
+                    {#  <a href="{{ path('app_music_file_show', {'id': music_file.id}) }}">show</a>#}
+                      {#  <a href="{{ path('app_music_file_edit', {'id': music_file.id}) }}">edit</a>#}
+                       {# <a href="{{ path('app_music_file_delete', {'id': music_file.id}) }}">Usuń</a>#}
+                    <form method="post" action="{{ path('app_music_file_delete', {'id': music_file.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" class="d-inline-block">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ music_file.id) }}">
+                        <button class="btn btn-danger">Usuń</button>
+                    </form>
+                    {#  <button class="btn btn-primary btn-click d-inline-block">Wybierz</button>#}
+                <td>
+                    <a href="{{ path('app_music_file_select', {'id': music_file.id}) }}" class="btn btn-primary">Wybierz</a>
+                </td>
+                <td>
+                    <button class="btn btn-success play-button" data-src="{{ asset('uploads/music_files/' ~ music_file.fileName) }}">
+                        ▶ Odtwórz
+                    </button>
+                </td>
+            </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="http://localhost:50929/dictation"  class="btn btn-primary">Przejdź do dyktanda</a>
+    <a href="{{ path('app_music_file_new') }}" class="btn btn-primary">Dodaj nowy plik</a>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const audioPlayer = document.createElement("audio");
+            document.body.appendChild(audioPlayer);
+
+            document.querySelectorAll(".play-button").forEach(button => {
+                button.addEventListener("click", function() {
+                    audioPlayer.src = this.getAttribute("data-src");
+                    audioPlayer.play();
+                });
+            });
+        });
+    </script>
+{% endblock %}

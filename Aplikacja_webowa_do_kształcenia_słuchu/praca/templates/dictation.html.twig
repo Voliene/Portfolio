@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictation Training</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Music&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vexflow/4.0.3/vexflow-min.js"></script>
+
+    <script src="{{ asset('js/Staff.js') }}" defer></script>
+    <style>
+
+        #stave {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        header
+        {
+            display: block;
+            text-align: left;
+            margin: 0;
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
+        .note-btn, .accidental-btn, #reset-btn , #delete-last-note {
+            font-size: 20px;
+            margin: 1px;
+            padding: 15px 20px;
+
+        }
+        .note {
+            position: absolute;
+            display: none;
+            font-size: 40px;
+            color: black;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .active-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: 2px solid #388E3C;
+
+        }
+        .sticky-div {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(to bottom, #ffffff, #F5F5DC);
+            padding: 10px;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        body{
+            font-family: 'Merriweather', serif;
+
+
+        }
+        button {
+            background: linear-gradient(to bottom, #EED9C4, #D2B48C);
+            border: 2px solid #8B6F47;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: saddlebrown;
+        }
+
+        button:hover {
+            background: linear-gradient(to bottom, #B09060, #8B6F47);
+            box-shadow: 2px 2px 0px #8B6F47, 4px 4px 0px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 1px 1px 0px #8B6F47, 2px 2px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(107, 76, 48, 0.5); /* Subtelny efekt "starego papieru" */
+        }
+
+
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">MusApp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Przełącz nawigację">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href={{ path('homepage') }}>Strona główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:50929/sing">Śpiew</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:50929/dictation">Dyktando</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<button  onclick="window.location.href='http://localhost:50929/music/file/new'">
+    Dodaj nowy plik
+</button>
+
+<button  onclick="window.location.href='http://localhost:50929/music/file'">
+   Wybierz plik
+</button>
+<button id="changeMetrum">Zmień metrum</button>
+
+<div class="sticky-div" id="button-container">
+{% if selectedFile %}
+    <audio id="dictation-player" controls style="display:block;">
+        <source src="{{ asset('uploads/music_files/' ~ selectedFile) }}" type="audio/mpeg">
+        Twoja przeglądarka nie obsługuje tagu audio.
+    </audio>
+{% else %}
+    <p>Nie wybrano żadnego pliku.</p>
+{% endif %}
+
+
+    <button class="note-btn" data-duration="1" data-symbol="&#x1D15D;">&#x1D15D;<br>1</button>
+    <button class="note-btn" data-duration="2" data-symbol="&#x1D15E;">&#x1D15E;<br>2</button>
+    <button class="note-btn" data-duration="4" data-symbol="&#x1D15F;">&#x1D15F;<br>3</button>
+    <button class="note-btn" data-duration="8" data-symbol="&#x1D160;">&#x1D160;<br>4</button>
+    <button class="note-btn" data-duration="16" data-symbol="&#x1D161;">&#x1D161;<br>5</button>
+
+    <button class="note-btn" data-duration="1r" data-symbol="&#x1D13B;">&#x1D13B;<br>Q</button>
+    <button class="note-btn" data-duration="2r" data-symbol="&#x1D13C;">&#x1D13C;<br>W</button>
+    <button class="note-btn" data-duration="4r" data-symbol="&#x1D13D;">&#x1D13D;<br>E</button>
+    <button class="note-btn" data-duration="8r" data-symbol="&#x1D13E;">&#x1D13E;<br>R</button>
+    <button class="note-btn" data-duration="16r" data-symbol="&#x1D13F;">&#x1D13F;<br>T</button>
+
+    <button class="accidental-btn" data-accidental="#" data-symbol="&#x266F;">&#x266F;<br>A</button>
+    <button class="accidental-btn" data-accidental="b" data-symbol="&#x266D;">&#x266D;<br>S</button>
+    <button class="accidental-btn" data-accidental="n" data-symbol="&#x266E;">&#x266E;<br>T</button>
+
+    <button id="reset-btn">Reset<br>Esc</button>
+    <button id="delete-last-note">Usuń<br>Backspace</button>
+</div>
+
+<div id="stave"></div>
+
+
+
+
+<button  onclick="window.location.href='{{ path('homepage') }}'">
+    Wróć do strony głównej
+</button>
+</body>
+</html>
+

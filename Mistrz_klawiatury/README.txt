@@ -1,0 +1,1 @@
+Aplikacja stworzona w zespole w ramach pracy zespołowej w trakcie nauki na uczelni. Aplikacja umożliwia interaktywny interfejs umożliwiający trenowanie poprawnego pisania na klawiaturze. Pozwala na wporwadzanie tekstu w ramach ćwiczeń. Aplikacja zawiera system automatycznej walidacji oraz elementy interfejsu wspomagające naukę. Zaimplementowany został również system logowania. 

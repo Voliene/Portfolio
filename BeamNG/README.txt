@@ -1,0 +1,2 @@
+W zakresie projektu zrealizowano API oraz rozszerzenie w silniku Beam Engine dla gry BeamNG. Celem projektu było stworzenie rozszerzenia umożliwiającego 
+testowanie zachowania kierowcy na nieprzewidziane sytuacje na drodze. 

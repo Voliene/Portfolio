@@ -1,0 +1,10 @@
+twig:
+    file_name_pattern: '*.twig'
+
+    form_themes: ['bootstrap_5_layout.html.twig']
+    globals:
+        bootstrap_version: '5'
+
+when@test:
+    twig:
+        strict_variables: true

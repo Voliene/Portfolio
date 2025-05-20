@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Improve singing</title>
+
+    {# Załaduj plik CSS Bootstrapa 5 #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    {# Jeśli masz własne style CSS, możesz je załadować tutaj #}
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: saddlebrown;
+            width:100%;
+            background: linear-gradient(to bottom, #ffffff, #F5F5DC);
+            font-family: 'Merriweather', serif;
+        }
+
+        #note {
+            font-size: 4rem;
+            color: saddlebrown;
+        }
+        header
+        {
+            display: block;
+            text-align: left;
+            margin: 0;
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
+        *{
+            padding : 0;
+            margin : 0;
+        }
+        html{
+            width:100%;
+            height:900px;
+        }
+        h1{
+            color: saddlebrown;
+
+        }
+        button {
+            background: linear-gradient(to bottom, #EED9C4, #D2B48C);
+            border: 2px solid #8B6F47;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: saddlebrown;
+        }
+
+        button:hover {
+            background: linear-gradient(to bottom, #B09060, #8B6F47);
+            box-shadow: 2px 2px 0px #8B6F47, 4px 4px 0px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 1px 1px 0px #8B6F47, 2px 2px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(107, 76, 48, 0.5);
+        }
+        h1{
+            padding: 10px;
+        }
+    </style>
+
+    {# Umożliwiamy nadpisywanie stylów w innych szablonach #}
+    {% block stylesheets %}{% endblock %}
+
+    {% block javascripts %}{% endblock %}
+</head>
+
+<body >
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">MusApp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Przełącz nawigację">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href={{ path('homepage') }}>Strona główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:50929/sing">Śpiew</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:50929/dictation">Dyktando</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- //////////////////////////////////////////////////////// -->
+<div class="d-flex align-items-center">
+    <h1 id="sing-label">Zaśpiewaj nutę:</h1>
+    <h1  id="random-note">_</h1>
+    <button  id="draw-button">Losuj nutę</button>
+</div>
+
+<div class="d-flex align-items-center">
+    <span id="note" aria-labelledby="clarity-label">-</span>
+</div>
+
+<div class="d-flex align-items-center">
+    <p class="lead" id="pitch-label">Częstotliwość:</p>
+    <p class="lead" id="pitch" aria-labelledby="pitch-label">0</p>
+</div>
+
+
+<div class="d-flex align-items-center">
+    <p class="lead" id="clarity-label" >Klarowność:</p>
+    <p class="lead" id="clarity" aria-labelledby="clarity-label">0</p>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////// -->
+<hr />
+
+
+
+<div class="container text-center mt-5">
+    <button id="resume-button">Resetuj pobieranie dźwięku</button>
+</div>
+<br>
+
+
+<button  onclick="window.location.href='{{ path('homepage') }}'">
+    Wróć do strony głównej
+</button>
+
+
+
+
+<script type="module" src="{{ asset('js/script.js') }}" defer></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
